@@ -53,7 +53,7 @@ func (self *StepTypeBootCommand) Run(state multistep.StateBag) multistep.StepAct
 
 	defer net_conn.Close()
 
-	c, err := vnc.Client(net_conn, &vnc.ClientConfig{Exclusive: true})
+	c, err := vnc.Client(net_conn, &vnc.ClientConfig{})
 
 	if err != nil {
 		err := fmt.Errorf("Error establishing VNC session: %s", err)
