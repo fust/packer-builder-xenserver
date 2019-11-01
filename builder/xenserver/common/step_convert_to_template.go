@@ -24,15 +24,19 @@ func (self *StepConvertToTemplate) Run(state multistep.StateBag) multistep.StepA
 
 	ui.Say("Step: convert VM to template")
 
-	if config.Convert == false || config.Convert == "" {
+	if config.Convert == false {
 		ui.Say("Skipping conversion")
 		return multistep.ActionContinue
 	}
 
 	success := func() bool {
 		ui.Message("Converting VM to template")
-		instance.SetIsATemplate(true)
-	}
+		err := instance.SetIsATemplate(true)
+		if err != nil {
+			return false
+		}
+		return true
+	}()
 
 	if !success {
 		ui.Error(fmt.Sprintf("Could convert VM to template"))
